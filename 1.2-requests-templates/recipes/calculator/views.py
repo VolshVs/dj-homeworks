@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, reverse
 
 DATA = {
     'omlet': {
@@ -15,16 +15,73 @@ DATA = {
         'колбаса, ломтик': 1,
         'сыр, ломтик': 1,
         'помидор, ломтик': 1,
-    },
-    # можете добавить свои рецепты ;)
+    }
 }
 
-# Напишите ваш обработчик. Используйте DATA как источник данных
-# Результат - render(request, 'calculator/index.html', context)
-# В качестве контекста должен быть передан словарь с рецептом:
-# context = {
-#   'recipe': {
-#     'ингредиент1': количество1,
-#     'ингредиент2': количество2,
-#   }
-# }
+
+def home_view(request):
+    template_name = 'calculator/home.html'
+    pages = {
+        'Главная страница': reverse('home'),
+        'Рецепт омлета': reverse('omlet'),
+        'Рецепт макарошек': reverse('pasta'),
+        'Рецепт вкуснячего бутера': reverse('buter')
+    }
+    context = {
+        'pages': pages
+    }
+    return render(request, template_name, context)
+
+
+def buter_view(request):
+    template_name = 'calculator/index.html'
+    pages = {
+        'Вернуться на главную страницу': reverse('home')
+    }
+    context = {
+        'recipe': {
+        },
+        'pages': pages
+    }
+    servings = int(request.GET.get('servings', 1))
+    context['servings'] = servings
+    for ing in DATA['buter']:
+        quantity = round(float(DATA['buter'][ing] * servings), 2)
+        context['recipe'].update({ing: quantity})
+    return render(request, template_name, context)
+
+
+def omlet_view(request):
+    template_name = 'calculator/index.html'
+    pages = {
+        'Вернуться на главную страницу': reverse('home')
+    }
+    context = {
+        'recipe': {
+        },
+        'pages': pages
+    }
+    servings = int(request.GET.get('servings', 1))
+    context['servings'] = servings
+    for ing in DATA['omlet']:
+        quantity = round(float(DATA['omlet'][ing] * servings), 2)
+        context['recipe'].update({ing: quantity})
+    return render(request, template_name, context)
+
+
+def pasta_view(request):
+    template_name = 'calculator/index.html'
+    pages = {
+        'Вернуться на главную страницу': reverse('home')
+    }
+    context = {
+        'recipe': {
+        },
+        'pages': pages
+    }
+    servings = int(request.GET.get('servings', 1))
+    context['servings'] = servings
+    for ing in DATA['pasta']:
+        quantity = round(float(DATA['pasta'][ing] * servings), 2)
+        context['recipe'].update({ing: quantity})
+    return render(request, template_name, context)
