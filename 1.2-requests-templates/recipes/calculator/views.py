@@ -23,17 +23,16 @@ def home_view(request):
     template_name = 'calculator/home.html'
     pages = {
         'Главная страница': reverse('home'),
-        'Рецепт омлета': reverse('omlet'),
-        'Рецепт макарошек': reverse('pasta'),
-        'Рецепт вкуснячего бутера': reverse('buter')
+        'Рецепт омлета': 'http://127.0.0.1:8000/omlet/',
+        'Рецепт макарошек': 'http://127.0.0.1:8000/pasta/',
+        'Рецепт вкуснячего бутера': 'http://127.0.0.1:8000/buter/'
     }
     context = {
         'pages': pages
     }
     return render(request, template_name, context)
 
-
-def buter_view(request):
+def dish(request, dish):
     template_name = 'calculator/index.html'
     pages = {
         'Вернуться на главную страницу': reverse('home')
@@ -45,43 +44,7 @@ def buter_view(request):
     }
     servings = int(request.GET.get('servings', 1))
     context['servings'] = servings
-    for ing in DATA['buter']:
-        quantity = round(float(DATA['buter'][ing] * servings), 2)
-        context['recipe'].update({ing: quantity})
-    return render(request, template_name, context)
-
-
-def omlet_view(request):
-    template_name = 'calculator/index.html'
-    pages = {
-        'Вернуться на главную страницу': reverse('home')
-    }
-    context = {
-        'recipe': {
-        },
-        'pages': pages
-    }
-    servings = int(request.GET.get('servings', 1))
-    context['servings'] = servings
-    for ing in DATA['omlet']:
-        quantity = round(float(DATA['omlet'][ing] * servings), 2)
-        context['recipe'].update({ing: quantity})
-    return render(request, template_name, context)
-
-
-def pasta_view(request):
-    template_name = 'calculator/index.html'
-    pages = {
-        'Вернуться на главную страницу': reverse('home')
-    }
-    context = {
-        'recipe': {
-        },
-        'pages': pages
-    }
-    servings = int(request.GET.get('servings', 1))
-    context['servings'] = servings
-    for ing in DATA['pasta']:
-        quantity = round(float(DATA['pasta'][ing] * servings), 2)
+    for ing in DATA[f'{dish}']:
+        quantity = round(float(DATA[f'{dish}'][ing] * servings), 2)
         context['recipe'].update({ing: quantity})
     return render(request, template_name, context)
