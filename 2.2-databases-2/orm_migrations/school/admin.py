@@ -5,6 +5,7 @@ from .models import Student, Teacher
 
 @admin.register(Student)
 class StudentAdmin(admin.ModelAdmin):
+    # list_display = ['id', 'name', 'teachers', 'group']
     pass
 
 

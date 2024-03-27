@@ -44,3 +44,25 @@ def one_book_view(request, pub_date):
         'next_page': next_page,
     }
     return render(request, template, context)
+
+
+# Комментарий преподавателя:
+
+# В дополнительном задании лучше использовать фильтры для создания пагинации книг по дате.
+#
+# Посмотрите как работать с фильтрами в документации
+# https://docs.djangoproject.com/en/4.0/topics/db/queries/#filters-can-reference-fields-on-the-model
+#
+# Пример
+#
+# def books_pub_date(request, pub_date):
+#     template = 'books/books_list.html'
+#     books_objects = Book.objects.filter(pub_date=pub_date)
+#     books_next = Book.objects.filter(pub_date__gt=pub_date).order_by('pub_date').first()
+#     books_previous = Book.objects.filter(pub_date__lt=pub_date).order_by('-pub_date').first()
+#     context = {
+#         'books': books_objects,
+#         'next_book': books_next,
+#         'previous_book': books_previous,
+#     }
+#     return render(request, template, context)

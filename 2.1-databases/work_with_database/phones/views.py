@@ -27,3 +27,15 @@ def show_product(request, slug):
     phone = get_object_or_404(Phone, slug=slug)
     context = {'phone': phone}
     return render(request, template, context)
+
+
+# Комментарий преподавателя:
+
+# "Единственное что хотелось бы добавить к основному заданию: скрипт загрузки данных можно сократить"
+#
+#  for phone in phones:
+#             # TODO: Добавьте сохранение модели
+#             pass
+#             phone_object = Phone(**phone)
+#             phone_object.save()
+
